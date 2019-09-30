@@ -9,6 +9,13 @@
   <button id="authorizeButton">Login with Google</button>
   <button id="signoutButton" style="display: none">Sign out</button>
   
-  <script src="index.js" type="module"></script>
-  <script src="https://apis.google.com/js/platform.js?onload=handleClientLoad" async defer></script>
+  <script src="index.js"></script>
+  <script src="login-screen.js"></script>
+  <script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
+  <script>
+    function init() {
+      console.log('init');
+      handleClientLoad();
+    }
+  </script>
 </body>

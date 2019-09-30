@@ -1,3 +1,3 @@
 console.log('index.js loaded');
 
-import('./login-screen.js');
+//import('./login-screen.js');
