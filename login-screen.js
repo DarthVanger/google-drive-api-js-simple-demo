@@ -78,4 +78,5 @@ function updateSigninStatus(isSignedIn) {
 
 function signInSuccessHandler() {
   console.log('Sign in successfull! User is authorized! What next? :)');
+  app.run();
 }
