@@ -10,6 +10,27 @@ function handleAuthClick(event) {
   //gapi.auth2.getAuthInstance().signIn();
   console.log('Handling auth click');
   initClient();
+
+  function initClient() {
+    // Developer Console, https://console.developers.google.com
+    console.log('Authorizing with gapi.auth2.init()');
+    gapi.client.init({
+      clientId: clientId,
+      apiKey: apiKey,
+      discoveryDocs: DISCOVERY_DOCS, //: ['https://people.googleapis.com/$discovery/rest'],
+      scope: SCOPES
+    }).then(function (response) {
+      // Listen for sign-in state changes.
+      gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
+
+      // Handle the initial sign-in state.
+      updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+
+      gapi.auth2.getAuthInstance().signIn();
+    }, function(error) {
+      throw error;
+    });
+  }
 }
 
 const scopes = [
@@ -38,27 +59,6 @@ var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/res
 // Authorization scopes required by the API; multiple scopes can be
 // included, separated by spaces.
 var SCOPES = 'https://www.googleapis.com/auth/drive.metadata.readonly';
-
-function initClient() {
-  // Developer Console, https://console.developers.google.com
-  console.log('Authorizing with gapi.auth2.init()');
-  gapi.client.init({
-    clientId: clientId,
-    apiKey: apiKey,
-    discoveryDocs: DISCOVERY_DOCS, //: ['https://people.googleapis.com/$discovery/rest'],
-    scope: SCOPES
-  }).then(function (response) {
-    // Listen for sign-in state changes.
-    gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
-
-    // Handle the initial sign-in state.
-    updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-
-    gapi.auth2.getAuthInstance().signIn();
-  }, function(error) {
-    throw error;
-  });
-}
 
 /**
  *  Called when the signed in status changes, to update the UI
